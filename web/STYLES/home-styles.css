@@ -1,0 +1,106 @@
+/* 
+    Created on : Feb 4, 2025, 11:46:13 AM
+    Author     : Ashen Samarasekera
+*/
+body{
+    font-family: "Poppins", serif;
+}
+a{
+    color: white;
+}
+.home_button{
+    text-decoration: none;
+    background-color: #3D3D3D;
+    outline:none;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px
+}
+.home_button:hover{
+    background-color: grey;
+    cursor: pointer;
+
+}
+.home__container{
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    max-width:100%;
+    margin: auto;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0 0.5rem;
+}
+.home__sub__container{
+    max-width: 700px;
+    margin-right: 15rem;
+    position: relative;
+}
+.home__para{
+    font-size: 11px;
+    line-height: 18px;
+}
+.home__topics{
+    text-align: center;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:  3rem;
+    gap: 2px;
+}
+
+.home__topic__para{
+    font-size: 14px;
+
+
+}
+
+.home__main__topic{
+    font-family: "DynaPuff", serif;
+    font-size: 32px;
+    color: #3D3D3D;
+
+}
+
+.absolute__container{
+    position: absolute;
+    bottom: -300px;
+    text-align: center;
+    font-size: 11px;
+    width:300px;
+    width:100%;
+    color: #3D3D3D;
+
+}
+
+.absolute__container_2{
+    position: absolute;
+    top: 40px;
+    left:30px;
+    color: white;
+    display: flex;
+    font-size:25px;
+    align-items: center;
+    font-family: "DynaPuff", serif;
+    gap: 5px;
+
+}
+.absolute__container_1{
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+    color: white;
+    font-size:38px;
+    text-align: right;
+
+}
+
+.image__container{
+    position: relative;
+}

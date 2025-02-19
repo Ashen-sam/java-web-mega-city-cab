@@ -1,5 +1,5 @@
 :root{
-    font-family: "Poppins", serif;
+    /*font-family: "Poppins", serif;*/
     text-decoration: none;
 }
 a{
@@ -18,6 +18,10 @@ body{
 .auth__topic{
     font-size: 2rem;
     font-weight: 500;
+    font-family: "DynaPuff", serif;
+    /*font-size: 32px;*/
+    color: #3D3D3D;
+
 }
 
 .auth__heading{
@@ -61,7 +65,7 @@ input{
     gap:10px;
 }
 .auth__submit{
-    background-color: black;
+    background-color: #3D3D3D;
     color:white;
     border:none;
     font-weight: 500;
