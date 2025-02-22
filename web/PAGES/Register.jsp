@@ -21,7 +21,7 @@
                 <form action="action" class="auth__form" id="authForm">
                     <div class="auth__heading">
                         <div class="auth__topic">Sign Up</div>
-                        <div class="auth_sub">Hello, welcome back to your account welcome <br> back to your accountwelcome back account welcome back </div>
+                        <div class="auth_sub">Hello, welcome back to your account welcome <br> back to your account welcome back account welcome back </div>
                     </div>
                     <div class="auth__input">
                         <input type='text' placeholder='username' id="username" name="username"/>
