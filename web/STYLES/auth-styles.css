@@ -59,6 +59,13 @@ input{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border:1px solid lightgray;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
 .auth__input{
     display: flex;
     flex-direction:column;

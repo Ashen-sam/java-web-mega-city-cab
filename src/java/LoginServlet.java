@@ -1,6 +1,4 @@
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Ashen Samarasekera
- */
 @WebServlet(urlPatterns = {"/Login"})
 public class LoginServlet extends HttpServlet {
 
@@ -29,12 +23,27 @@ public class LoginServlet extends HttpServlet {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
-                response.sendRedirect("PAGES/Dashboard-booking.jsp");
+                String role = resultSet.getString("role");
+
+                // Store user details in session
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("role", role);
+
+                // Redirect based on role
+                if ("customer".equals(role)) {
+                    response.sendRedirect("PAGES/CustomerDashboard.jsp");
+                } else if ("driver".equals(role)) {
+                    response.sendRedirect("PAGES/DriverDashboard.jsp");
+                } else {
+                    response.sendRedirect("PAGES/Dashboard-booking.jsp"); // Default admin or others
+                }
             } else {
                 request.setAttribute("errorMessage", "Invalid username or password.");
-                response.getWriter().write("Invalid username or password.");
-
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

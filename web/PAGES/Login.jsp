@@ -20,9 +20,9 @@
                     <div class="auth_sub">Hello, welcome back! Please log in to your account.</div>
                 </div>
                 <div class="auth__input">
-                    <input type="text" placeholder="Username" id="username" name="username" required />
+                    <input type="text" placeholder="Username" id="username" name="username"  />
                     <div class="error" id="usernameError"></div>
-                    <input type="password" placeholder="Password" id="password" name="password" required />
+                    <input type="password" placeholder="Password" id="password" name="password"  />
                     <div class="error" id="passwordError"></div>
                 </div>
                 <input class="auth__submit" type="submit" value="Sign In" />
@@ -31,8 +31,6 @@
                     <a href="../PAGES/Register.jsp">Sign Up</a>
                 </div>
             </form>
-            <%-- Display error message if login fails --%>
-           <%-- Display error message if it exists --%>
                 <c:if test="${not empty errorMessage}">
                     <div class="error">${errorMessage}</div>
                 </c:if>
