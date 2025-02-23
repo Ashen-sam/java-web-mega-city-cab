@@ -1,6 +1,6 @@
 <%-- 
-    Document   : DriverDashboard
-    Created on : Feb 23, 2025, 10:15:29 AM
+    Document   : AdminDashboard
+    Created on : Feb 23, 2025, 11:29:45 AM
     Author     : Ashen Samarasekera
 --%>
 
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Driver</h1>
+        <h1>admin</h1>
     </body>
 </html>

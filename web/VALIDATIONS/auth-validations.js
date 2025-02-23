@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         passwordError.textContent = '';
     });
 
+   
+
     form.addEventListener('submit', (event) => {
         let isValid = true;
 
@@ -31,3 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+ window.onload = function() {
+            // Assuming your form has an ID, you can reset it
+            document.getElementById("authForm").reset();
+        };

@@ -13,6 +13,7 @@
             const form = document.getElementById("registerForm");
             const username = document.getElementById("username");
             const password = document.getElementById("password");
+            const togglePassword = document.getElementById("togglePassword");
             const name = document.getElementById("name");
             const nic = document.getElementById("nic");
             const phoneNumber = document.getElementById("phone_number");
@@ -24,7 +25,7 @@
 
                 if (role.value === "driver") {
                     additionalFields.innerHTML = `
-                        <input  type='text' placeholder='License Number' id='license_number' name='license_number'  />
+                        <input type='text' placeholder='License Number' id='license_number' name='license_number' />
                         <div class="error" id="licenseError"></div>
                     `;
                     addInputListeners(document.getElementById("license_number"), "licenseError");
@@ -44,11 +45,22 @@
                 }
             }
 
+            function validatePassword() {
+                const errorElement = document.getElementById("passwordError");
+                if (password.value.length < 8) {
+                    errorElement.textContent = "Password must be at least 8 characters.";
+                    return false;
+                } else {
+                    errorElement.textContent = "";
+                    return true;
+                }
+            }
+
             function validateForm(event) {
                 let isValid = true;
 
                 isValid &= validateInput(username, "usernameError", "Username is required.");
-                isValid &= validateInput(password, "passwordError", "Password is required.");
+                isValid &= validatePassword();
                 isValid &= validateInput(name, "nameError", "Name is required.");
                 isValid &= validateInput(nic, "nicError", "NIC is required.");
                 isValid &= validateInput(phoneNumber, "phoneError", "Phone number is required.");
@@ -78,9 +90,39 @@
             addInputListeners(nic, "nicError");
             addInputListeners(phoneNumber, "phoneError");
 
+            password.addEventListener("input", validatePassword);
             form.addEventListener("submit", validateForm);
+
+            // Show/Hide Password Toggle
+            togglePassword.addEventListener("click", function () {
+                if (password.type === "password") {
+                    password.type = "text";
+                    togglePassword.innerHTML = "&#128065;"; // Eye icon (👁)
+                } else {
+                    password.type = "password";
+                    togglePassword.innerHTML = "&#128064;"; // Closed eye (👁‍🗨)
+                }
+            });
         });
     </script>
+    <style>
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .password-container input {
+            width: 345px;
+            padding-right: 40px; /* Space for icon */
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
     <div class="main__container">
@@ -97,7 +139,10 @@
                     <input type='text' placeholder='Username' id="username" name="username" />
                     <div class="error" id="usernameError"></div>
 
-                    <input type="password" placeholder='Password' id="password" name="password" />
+                    <div class="password-container">
+                        <input type="password" placeholder='Password' id="password" name="password" />
+                        <span id="togglePassword" class="toggle-password">&#128064;</span>
+                    </div>
                     <div class="error" id="passwordError"></div>
 
                     <input type='text' placeholder='Name' id="name" name="name" />
@@ -113,7 +158,7 @@
                 </div>
                 <input class='auth__submit' type='submit' value='Sign up'/>
                   <div class="auth__box">
-                    <div>Don't have an account?</div>
+                    <div>Already have an account?</div>
                     <a href="../PAGES/Login.jsp">Sign In</a>
                 </div>
             </form>
