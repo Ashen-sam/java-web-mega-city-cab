@@ -12,13 +12,13 @@ body{
 }
 
 .errorMessage_login_cred{
-    position: absolute; 
-    top: 30%; 
+    position: absolute;
+    top: 30%;
     left: 50%;
-    transform: translate(-50%, -50%); 
-    width: 100%; 
-    text-align: center; 
-    
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+
 }
 .main__container{
     display: flex;
@@ -112,25 +112,46 @@ input{
     font-size: 0.8rem;
 }
 
-.back_customer {
-     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), /* Dark gradient overlay */
-        url('../IMG/back_wall.jpg');
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center; 
-    width: 100%; 
-    height: 400px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-}
 
+.book__container_main{
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
 .book__container{
-    position: absolute;
-    top:150px;
     padding:15px;
     background: white;
     border-radius: 4px;
     border:1px solid lightgray;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    max-width: 1200px;
+    margin: auto;
+}
+.logo img {
+    height: 50px; /* Adjust as needed */
+}
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center; /* Space between links */
+}
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+}
+.nav-links a:hover {
+    text-decoration: underline;
+}
+.hidden {
+    display: none; /* Class to hide elements */
 }

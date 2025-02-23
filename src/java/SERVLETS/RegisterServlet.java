@@ -7,6 +7,8 @@ import MODEL.Customer_Megacity;
 import MODEL.Driver_Megacity;
 import MODEL.User_Megacity;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -45,4 +48,5 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("PAGES/Register.jsp").forward(request, response);
         }
     }
+
 }
