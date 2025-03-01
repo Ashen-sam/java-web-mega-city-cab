@@ -36,24 +36,48 @@
             .hidden {
                 display: none; /* Class to hide elements */
             }
-        </style>
-        <script>
-            function showAdditionalForm(event) {
-                event.preventDefault(); // Prevent the default form submission
-                document.getElementById("initialForm").classList.add("hidden"); // Hide the initial form
-                document.getElementById("additionalForm").classList.remove("hidden"); // Show the additional form
-            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                border-radius: 10px;
 
-            function showInitialForm() {
-                document.getElementById("additionalForm").classList.add("hidden"); // Hide the additional form
-                document.getElementById("initialForm").classList.remove("hidden"); // Show the initial form
             }
-        </script>
+            .text-section {
+                max-width: 50%;
+            }
+            .benefits {
+                background-color: white;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .button {
+                background-color: black;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+            .container__flex{
+                max-width: 1100px;
+                margin: auto;
+
+            }
+            .text-align{
+                max-width: 1100px;
+                margin: 80px auto 0 auto;
+                text-align:center;
+            }
+        </style>
     </head>
     <body>
         <div class="header">
             <div class="logo">
-                <h3>MegaCab</h3><!-- Replace with your logo path -->
+                <h3>MegaCab</h3>
             </div>
             <div class="nav-links">
                 <a href="#">About</a>
@@ -69,22 +93,33 @@
             <!-- Initial Booking Form -->
             <form id="initialForm" class="auth__form book__container" onsubmit="showAdditionalForm(event)">
                 <h3>Request a ride</h3>
+                <h3>Price: <span id="priceDisplay">Select locations</span></h3>
                 <div class="auth__input">
                     <label for="vehicleType">Vehicle Type:</label>
                     <select class="select" id="vehicleType" name="vehicleType" required>
                         <option value="" disabled selected>Select a vehicle type</option>
                         <option value="bike">Bike</option>
-                        <option value="van">Van</option>
                         <option value="threewheeler">Three-Wheeler</option>
+                        <option value="van">Van</option>
                     </select>
                 </div>
                 <div class="auth__input">
                     <label for="pickupLocation">Pickup Location:</label>
-                    <input type="text" id="pickupLocation" name="pickupLocation" required>
+                    <input type="text" id="pickupLocation" name="pickupLocation" list="colomboLocations" placeholder="e.g. Colombo Fort" required>
+                    <datalist id="colomboLocations">
+                        <option value="Colombo Fort">
+                        <option value="Colombo 3">
+                        <option value="Colombo 5">
+                        <option value="Colombo 7">
+                        <option value="Colombo 8">
+                        <option value="Colombo 10">
+                        <option value="Colombo 12">
+                        <option value="Colombo 13">
+                    </datalist>
                 </div>
                 <div class="auth__input">
                     <label for="dropLocation">Drop Location:</label>
-                    <input type="text" id="dropLocation" name="dropLocation" required>
+                    <input type="text" id="dropLocation" name="dropLocation" list="colomboLocations" placeholder="e.g. Colombo 7" required>
                 </div>
                 <div class="auth__input">
                     <label for="bookingDate">Booking Date:</label>
@@ -93,7 +128,6 @@
                 <input class="auth__submit" type="submit" value="Book Vehicle">
             </form>
 
-            <!-- Additional Form (hidden initially) -->
             <form style="position: relative" id="additionalForm" class="auth__form book__container hidden" action="<%=request.getContextPath()%>/submitBooking" method="post">
                 <h3>Enter Your Details</h3>
                 <div class="auth__input">
@@ -117,8 +151,52 @@
             </form>
 
             <div>
-                <img height="460" src="../IMG/3-2-ridesharing-new.webp"/>
+                <img height="460" src="../IMG/online-cab-booking-illustration-download-in-svg-png-gif-file-formats--order-taxi-app-service-pack-services-illustrations-3013176.webp"/>
+            </div>
+        </div>
+        <div class="text-align">
+            <h3 >Get your ride right with Uber Reserve</h3>
+            <p>Choose date and time</p>
+        </div>
+        <div class="container__flex">
+            <div class="container">
+                <div class="text-section">
+
+                    <h3>Benefits</h3>
+                    <ul>
+                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
+                        <li>⏳ Extra wait time included to meet your ride.</li>
+                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
+                    </ul>
+                </div>
+                <img src="../IMG/online-taxi-booking-illustration-download-in-svg-png-gif-file-formats--car-cab-city-service-pack-holidays-illustrations-4046973.webp" alt="Uber Reserve" width="300">
+            </div>
+
+            <div class="container">
+                <img src="../IMG/cab-app-illustration-download-in-svg-png-gif-file-formats--phone-online-car-booking-mobile-apps-and-services-pack-design-development-illustrations-3742564.webp" alt="Uber Reserve" width="300">
+
+                <div class="text-section">
+                    <h3>Get your ride right with Uber Reserve</h3>
+                    <p>Choose date and time</p>
+                    <h3>Benefits</h3>
+                    <ul>
+                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
+                        <li>⏳ Extra wait time included to meet your ride.</li>
+                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="benefits">
+                <h3>Benefits</h3>
+                <ul>
+                    <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
+                    <li>⏳ Extra wait time included to meet your ride.</li>
+                    <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
+                </ul>
+                <a href="#">See terms</a>
             </div>
         </div>
     </body>
+    <script src="../VALIDATIONS/priceCalculate.js"></script>
 </html>
