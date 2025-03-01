@@ -80,9 +80,9 @@
                 <h3>MegaCab</h3>
             </div>
             <div class="nav-links">
-                <a href="#">About</a>
+                <a href="../PAGES/About.jsp">About</a>
                 <a href="#">Help</a>
-                <a href="#">Business</a>
+                <a href="../PAGES/Business.jsp">Business</a>
                 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post">
                     <input class="auth__submit" type="submit" value="Logout">
                 </form>
@@ -154,49 +154,7 @@
                 <img height="460" src="../IMG/online-cab-booking-illustration-download-in-svg-png-gif-file-formats--order-taxi-app-service-pack-services-illustrations-3013176.webp"/>
             </div>
         </div>
-        <div class="text-align">
-            <h3 >Get your ride right with Uber Reserve</h3>
-            <p>Choose date and time</p>
-        </div>
-        <div class="container__flex">
-            <div class="container">
-                <div class="text-section">
-
-                    <h3>Benefits</h3>
-                    <ul>
-                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                        <li>⏳ Extra wait time included to meet your ride.</li>
-                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
-                    </ul>
-                </div>
-                <img src="../IMG/online-taxi-booking-illustration-download-in-svg-png-gif-file-formats--car-cab-city-service-pack-holidays-illustrations-4046973.webp" alt="Uber Reserve" width="300">
-            </div>
-
-            <div class="container">
-                <img src="../IMG/cab-app-illustration-download-in-svg-png-gif-file-formats--phone-online-car-booking-mobile-apps-and-services-pack-design-development-illustrations-3742564.webp" alt="Uber Reserve" width="300">
-
-                <div class="text-section">
-                    <h3>Get your ride right with Uber Reserve</h3>
-                    <p>Choose date and time</p>
-                    <h3>Benefits</h3>
-                    <ul>
-                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                        <li>⏳ Extra wait time included to meet your ride.</li>
-                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="benefits">
-                <h3>Benefits</h3>
-                <ul>
-                    <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                    <li>⏳ Extra wait time included to meet your ride.</li>
-                    <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
-                </ul>
-                <a href="#">See terms</a>
-            </div>
-        </div>
+    
     </body>
     <script src="../VALIDATIONS/priceCalculate.js"></script>
 </html>

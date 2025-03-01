@@ -25,10 +25,40 @@
 
                 if (role.value === "driver") {
                     additionalFields.innerHTML = `
-                        <input type='text' placeholder='License Number' id='license_number' name='license_number' />
-                        <div class="error" id="licenseError"></div>
+                        <select id="gender" name="gender" class="select" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="error" id="genderError"></div>
+
+                        <input type='text' placeholder='Address' id='address' name='address' />
+                        <div class="error" id="addressError"></div>
+
+                        <input type='date' placeholder='License Expiry Date' id='license_expiry_date' name='license_expiry_date' />
+                        <div class="error" id="licenseExpiryError"></div>
+
+                        <input type='number' placeholder='Driving Experience (Years)' id='driving_experience' name='driving_experience' />
+                        <div class="error" id="drivingExperienceError"></div>
+
+                        <input type='text' placeholder='Vehicle Type' id='vehicle_type' name='vehicle_type' />
+                        <div class="error" id="vehicleTypeError"></div>
+
+                        <input type='text' placeholder='Vehicle Registration Number' id='vehicle_registration_number' name='vehicle_registration_number' />
+                        <div class="error" id="vehicleRegError"></div>
+
+                        <input type='text' placeholder='Vehicle Make and Model' id='vehicle_make_model' name='vehicle_make_model' />
+                        <div class="error" id="vehicleMakeModelError"></div>
                     `;
-                    addInputListeners(document.getElementById("license_number"), "licenseError");
+
+                    // Add input listeners for new fields
+                    addInputListeners(document.getElementById("gender"), "genderError");
+                    addInputListeners(document.getElementById("address"), "addressError");
+                    addInputListeners(document.getElementById("license_expiry_date"), "licenseExpiryError");
+                    addInputListeners(document.getElementById("driving_experience"), "drivingExperienceError");
+                    addInputListeners(document.getElementById("vehicle_type"), "vehicleTypeError");
+                    addInputListeners(document.getElementById("vehicle_registration_number"), "vehicleRegError");
+                    addInputListeners(document.getElementById("vehicle_make_model"), "vehicleMakeModelError");
                 }
             }
 
@@ -66,10 +96,13 @@
                 isValid &= validateInput(phoneNumber, "phoneError", "Phone number is required.");
 
                 if (role.value === "driver") {
-                    const licenseNumber = document.getElementById("license_number");
-                    if (licenseNumber) {
-                        isValid &= validateInput(licenseNumber, "licenseError", "License number is required.");
-                    }
+                    isValid &= validateInput(document.getElementById("gender"), "genderError", "Gender is required.");
+                    isValid &= validateInput(document.getElementById("address"), "addressError", "Address is required.");
+                    isValid &= validateInput(document.getElementById("license_expiry_date"), "licenseExpiryError", "License expiry date is required.");
+                    isValid &= validateInput(document.getElementById("driving_experience"), "drivingExperienceError", "Driving experience is required.");
+                    isValid &= validateInput(document.getElementById("vehicle_type"), "vehicleTypeError", "Vehicle type is required.");
+                    isValid &= validateInput(document.getElementById("vehicle_registration_number"), "vehicleRegError", "Vehicle registration number is required.");
+                    isValid &= validateInput(document.getElementById("vehicle_make_model"), "vehicleMakeModelError", "Vehicle make and model is required.");
                 }
 
                 if (!isValid) {
