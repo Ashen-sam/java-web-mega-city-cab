@@ -10,23 +10,21 @@ public class Driver_Megacity {
     private String nic;
     private String gender;
     private String address;
-    private String licenseExpiryDate;
-    private int drivingExperience;
+    private String licenseNumber;
     private String vehicleType;
     private String vehicleRegistrationNumber;
     private String vehicleMakeModel;
 
     // Constructor with all fields
     public Driver_Megacity(String name, String phoneNumber, String nic, String gender, String address, 
-                           String licenseExpiryDate, int drivingExperience, String vehicleType, 
+                           String licenseNumber, String vehicleType, 
                            String vehicleRegistrationNumber, String vehicleMakeModel) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.nic = nic;
         this.gender = gender;
         this.address = address;
-        this.licenseExpiryDate = licenseExpiryDate;
-        this.drivingExperience = drivingExperience;
+        this.licenseNumber = licenseNumber;
         this.vehicleType = vehicleType;
         this.vehicleRegistrationNumber = vehicleRegistrationNumber;
         this.vehicleMakeModel = vehicleMakeModel;
@@ -73,20 +71,12 @@ public class Driver_Megacity {
         this.address = address;
     }
 
-    public String getLicenseExpiryDate() {
-        return licenseExpiryDate;
+    public String getLicenseNumber() {
+        return licenseNumber;
     }
 
-    public void setLicenseExpiryDate(String licenseExpiryDate) {
-        this.licenseExpiryDate = licenseExpiryDate;
-    }
-
-    public int getDrivingExperience() {
-        return drivingExperience;
-    }
-
-    public void setDrivingExperience(int drivingExperience) {
-        this.drivingExperience = drivingExperience;
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
     public String getVehicleType() {

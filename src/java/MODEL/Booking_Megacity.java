@@ -1,6 +1,7 @@
 package MODEL;
 
 public class Booking_Megacity {
+
     private int bookingId;
     private int customerRegId;
     private int vehicleId;
@@ -9,11 +10,15 @@ public class Booking_Megacity {
     private String bookingDate;
     private String bookingTime;
     private double price;
-    private String status; // Pending, Approved, Rejected
+    private String status;
 
-    // Constructor
-    public Booking_Megacity(int bookingId, int customerRegId, int vehicleId, String pickupLocation, 
-                            String dropLocation, String bookingDate, String bookingTime, double price, String status) {
+    // Default Constructor
+    public Booking_Megacity() {
+    }
+
+    // Parameterized Constructor
+    public Booking_Megacity(int bookingId, int customerRegId, int vehicleId, String pickupLocation,
+            String dropLocation, String bookingDate, String bookingTime, double price, String status) {
         this.bookingId = bookingId;
         this.customerRegId = customerRegId;
         this.vehicleId = vehicleId;
@@ -24,9 +29,6 @@ public class Booking_Megacity {
         this.price = price;
         this.status = status;
     }
-
-    // Default Constructor
-    public Booking_Megacity() {}
 
     // Getters and Setters
     public int getBookingId() {
@@ -99,5 +101,21 @@ public class Booking_Megacity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    // Override toString() method for better readability
+    @Override
+    public String toString() {
+        return "Booking_Megacity{"
+                + "bookingId=" + bookingId
+                + ", customerRegId=" + customerRegId
+                + ", vehicleId=" + vehicleId
+                + ", pickupLocation='" + pickupLocation + '\''
+                + ", dropLocation='" + dropLocation + '\''
+                + ", bookingDate='" + bookingDate + '\''
+                + ", bookingTime='" + bookingTime + '\''
+                + ", price=" + price
+                + ", status='" + status + '\''
+                + '}';
     }
 }

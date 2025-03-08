@@ -9,134 +9,128 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap" rel="stylesheet" />
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("registerForm");
-            const username = document.getElementById("username");
-            const password = document.getElementById("password");
-            const togglePassword = document.getElementById("togglePassword");
-            const name = document.getElementById("name");
-            const nic = document.getElementById("nic");
-            const phoneNumber = document.getElementById("phone_number");
-            const role = document.getElementById("role");
-            const additionalFields = document.getElementById("additionalFields");
+     document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registerForm");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const name = document.getElementById("name");
+    const nic = document.getElementById("nic");
+    const phoneNumber = document.getElementById("phone_number");
+    const role = document.getElementById("role");
+    const additionalFields = document.getElementById("additionalFields");
 
-            function toggleAdditionalFields() {
-                additionalFields.innerHTML = ""; // Clear previous fields
+    function toggleAdditionalFields() {
+        additionalFields.innerHTML = ""; // Clear previous fields
 
-                if (role.value === "driver") {
-                    additionalFields.innerHTML = `
-                        <select id="gender" name="gender" class="select" required>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <div class="error" id="genderError"></div>
+        if (role.value === "driver") {
+            additionalFields.innerHTML = `
+                <select id="gender" name="gender" class="select" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error" id="genderError"></div>
 
-                        <input type='text' placeholder='Address' id='address' name='address' />
-                        <div class="error" id="addressError"></div>
+                <input type='text' placeholder='Address' id='address' name='address' />
+                <div class="error" id="addressError"></div>
 
-                        <input type='date' placeholder='License Expiry Date' id='license_expiry_date' name='license_expiry_date' />
-                        <div class="error" id="licenseExpiryError"></div>
+                <input type='text' placeholder='License Number' id='license_number' name='license_number' />
+                <div class="error" id="license_numberError"></div>
 
-                        <input type='number' placeholder='Driving Experience (Years)' id='driving_experience' name='driving_experience' />
-                        <div class="error" id="drivingExperienceError"></div>
+                
 
-                        <input type='text' placeholder='Vehicle Type' id='vehicle_type' name='vehicle_type' />
-                        <div class="error" id="vehicleTypeError"></div>
+                <input type='text' placeholder='Vehicle Type' id='vehicle_type' name='vehicle_type' />
+                <div class="error" id="vehicleTypeError"></div>
 
-                        <input type='text' placeholder='Vehicle Registration Number' id='vehicle_registration_number' name='vehicle_registration_number' />
-                        <div class="error" id="vehicleRegError"></div>
+                <input type='text' placeholder='Vehicle Registration Number' id='vehicle_registration_number' name='vehicle_registration_number' />
+                <div class="error" id="vehicleRegError"></div>
 
-                        <input type='text' placeholder='Vehicle Make and Model' id='vehicle_make_model' name='vehicle_make_model' />
-                        <div class="error" id="vehicleMakeModelError"></div>
-                    `;
+                <input type='text' placeholder='Vehicle Make and Model' id='vehicle_make_model' name='vehicle_make_model' />
+                <div class="error" id="vehicleMakeModelError"></div>
+            `;
 
-                    // Add input listeners for new fields
-                    addInputListeners(document.getElementById("gender"), "genderError");
-                    addInputListeners(document.getElementById("address"), "addressError");
-                    addInputListeners(document.getElementById("license_expiry_date"), "licenseExpiryError");
-                    addInputListeners(document.getElementById("driving_experience"), "drivingExperienceError");
-                    addInputListeners(document.getElementById("vehicle_type"), "vehicleTypeError");
-                    addInputListeners(document.getElementById("vehicle_registration_number"), "vehicleRegError");
-                    addInputListeners(document.getElementById("vehicle_make_model"), "vehicleMakeModelError");
-                }
-            }
-
-            role.addEventListener("change", toggleAdditionalFields);
-
-            function validateInput(inputElement, errorElementId, errorMessage) {
-                const errorElement = document.getElementById(errorElementId);
-                if (inputElement.value.trim() === "") {
-                    errorElement.textContent = errorMessage;
-                    return false;
-                } else {
-                    errorElement.textContent = "";
-                    return true;
-                }
-            }
-
-            function validatePassword() {
-                const errorElement = document.getElementById("passwordError");
-                if (password.value.length < 8) {
-                    errorElement.textContent = "Password must be at least 8 characters.";
-                    return false;
-                } else {
-                    errorElement.textContent = "";
-                    return true;
-                }
-            }
-
-            function validateForm(event) {
-                let isValid = true;
-
-                isValid &= validateInput(username, "usernameError", "Username is required.");
-                isValid &= validatePassword();
-                isValid &= validateInput(name, "nameError", "Name is required.");
-                isValid &= validateInput(nic, "nicError", "NIC is required.");
-                isValid &= validateInput(phoneNumber, "phoneError", "Phone number is required.");
-
-                if (role.value === "driver") {
-                    isValid &= validateInput(document.getElementById("gender"), "genderError", "Gender is required.");
-                    isValid &= validateInput(document.getElementById("address"), "addressError", "Address is required.");
-                    isValid &= validateInput(document.getElementById("license_expiry_date"), "licenseExpiryError", "License expiry date is required.");
-                    isValid &= validateInput(document.getElementById("driving_experience"), "drivingExperienceError", "Driving experience is required.");
-                    isValid &= validateInput(document.getElementById("vehicle_type"), "vehicleTypeError", "Vehicle type is required.");
-                    isValid &= validateInput(document.getElementById("vehicle_registration_number"), "vehicleRegError", "Vehicle registration number is required.");
-                    isValid &= validateInput(document.getElementById("vehicle_make_model"), "vehicleMakeModelError", "Vehicle make and model is required.");
-                }
-
-                if (!isValid) {
-                    event.preventDefault(); // Stop form submission if invalid
-                }
-            }
-
-            function addInputListeners(inputElement, errorElementId) {
-                inputElement.addEventListener("input", function () {
-                    document.getElementById(errorElementId).textContent = "";
-                });
-            }
-
-            // Attach listeners to all input fields for real-time validation removal
-            addInputListeners(username, "usernameError");
-            addInputListeners(password, "passwordError");
-            addInputListeners(name, "nameError");
-            addInputListeners(nic, "nicError");
-            addInputListeners(phoneNumber, "phoneError");
-
-            password.addEventListener("input", validatePassword);
-            form.addEventListener("submit", validateForm);
-
-            // Show/Hide Password Toggle
-            togglePassword.addEventListener("click", function () {
-                if (password.type === "password") {
-                    password.type = "text";
-                    togglePassword.innerHTML = "&#128065;"; // Eye icon (👁)
-                } else {
-                    password.type = "password";
-                    togglePassword.innerHTML = "&#128064;"; // Closed eye (👁‍🗨)
-                }
+            document.querySelectorAll("#additionalFields input, #additionalFields select").forEach(input => {
+                addInputListeners(input, input.id + "Error");
             });
+        }
+    }
+
+    role.addEventListener("change", toggleAdditionalFields);
+    toggleAdditionalFields(); // Ensure fields appear correctly on page load
+
+    function validateInput(inputElement, errorElementId, errorMessage) {
+        const errorElement = document.getElementById(errorElementId);
+        if (!inputElement || inputElement.value.trim() === "") {
+            errorElement.textContent = errorMessage;
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    }
+
+    function validatePassword() {
+        const errorElement = document.getElementById("passwordError");
+        if (password.value.length < 8) {
+            errorElement.textContent = "Password must be at least 8 characters.";
+            return false;
+        } else {
+            errorElement.textContent = "";
+            return true;
+        }
+    }
+
+    function validateForm(event) {
+        let isValid = true;
+
+        isValid = validateInput(username, "usernameError", "Username is required.") && isValid;
+        isValid = validatePassword() && isValid;
+        isValid = validateInput(name, "nameError", "Name is required.") && isValid;
+        isValid = validateInput(nic, "nicError", "NIC is required.") && isValid;
+        isValid = validateInput(phoneNumber, "phoneError", "Phone number is required.") && isValid;
+
+        if (role.value === "driver") {
+            isValid = validateInput(document.getElementById("gender"), "genderError", "Gender is required.") && isValid;
+            isValid = validateInput(document.getElementById("address"), "addressError", "Address is required.") && isValid;
+            isValid = validateInput(document.getElementById("license_number"), "license_numberError", "License number is required.") && isValid;
+            isValid = validateInput(document.getElementById("vehicle_type"), "vehicleTypeError", "Vehicle type is required.") && isValid;
+            isValid = validateInput(document.getElementById("vehicle_registration_number"), "vehicleRegError", "Vehicle registration number is required.") && isValid;
+            isValid = validateInput(document.getElementById("vehicle_make_model"), "vehicleMakeModelError", "Vehicle make and model is required.") && isValid;
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Stop form submission if invalid
+        }
+    }
+
+    function addInputListeners(inputElement, errorElementId) {
+        inputElement.addEventListener("input", function () {
+            document.getElementById(errorElementId).textContent = "";
         });
+    }
+
+    addInputListeners(username, "usernameError");
+    addInputListeners(password, "passwordError");
+    addInputListeners(name, "nameError");
+    addInputListeners(nic, "nicError");
+    addInputListeners(phoneNumber, "phoneError");
+
+    password.addEventListener("input", validatePassword);
+    form.addEventListener("submit", validateForm);
+
+    togglePassword.addEventListener("click", function () {
+        if (password.type === "password") {
+            password.type = "text";
+            togglePassword.innerHTML = "&#128065;";
+        } else {
+            password.type = "password";
+            togglePassword.innerHTML = "&#128064;";
+        }
+    });
+});
+
     </script>
     <style>
         .password-container {

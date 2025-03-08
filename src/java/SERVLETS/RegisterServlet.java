@@ -19,72 +19,68 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    String role = request.getParameter("role");
-    String name = request.getParameter("name");
-    String nic = request.getParameter("nic");
-    String phoneNumber = request.getParameter("phone_number");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String role = request.getParameter("role");
+        String name = request.getParameter("name");
+        String nic = request.getParameter("nic");
+        String phoneNumber = request.getParameter("phone_number");
 
-    // Hash the password
-    String hashedPassword = hashPassword(password);
+        // Hash the password
+//        String hashedPassword = hashPassword(password);
 
-    // Create a new user with the hashed password
-    User_Megacity user = new User_Megacity(username, hashedPassword, role);
-    boolean userAdded = User_MegacityDAO.addUser(user);
+        // Create a new user with the hashed password
+        User_Megacity user = new User_Megacity(username, password, role);
+        Customer_Megacity customer = null;
+        Driver_Megacity driver = null;
 
-    if ("customer".equals(role)) {
-        // Create a new customer
-        Customer_Megacity customer = new Customer_Megacity(name, nic, phoneNumber);
-        Customer_MegacityDAO.addCustomer(customer);
-    } else if ("driver".equals(role)) {
-        // Retrieve additional driver-specific fields
-        String gender = request.getParameter("gender");
-        String address = request.getParameter("address");
-        String licenseExpiryDate = request.getParameter("license_expiry_date");
-        int drivingExperience = Integer.parseInt(request.getParameter("driving_experience"));
-        String vehicleType = request.getParameter("vehicle_type");
-        String vehicleRegistrationNumber = request.getParameter("vehicle_registration_number");
-        String vehicleMakeModel = request.getParameter("vehicle_make_model");
+        if ("customer".equalsIgnoreCase(role)) {
+            customer = new Customer_Megacity(name, nic, phoneNumber);
+        } else if ("driver".equalsIgnoreCase(role)) {
+            // Retrieve additional driver-specific fields
+            String gender = request.getParameter("gender");
+            String address = request.getParameter("address");
+            String licenseNumber = request.getParameter("license_number");
+            String vehicleType = request.getParameter("vehicle_type");
+            String vehicleRegistrationNumber = request.getParameter("vehicle_registration_number");
+            String vehicleMakeModel = request.getParameter("vehicle_make_model");
 
-        // Create a new driver with all fields
-        Driver_Megacity driver = new Driver_Megacity(
-            name, phoneNumber, nic, gender, address, licenseExpiryDate, 
-            drivingExperience, vehicleType, vehicleRegistrationNumber, vehicleMakeModel
-        );
+            driver = new Driver_Megacity(
+                name, phoneNumber, nic, gender, address, licenseNumber, 
+                vehicleType, vehicleRegistrationNumber, vehicleMakeModel
+            );
+        }
 
-        // Add the driver to the database
-        boolean driverAdded = Driver_MegacityDAO.addDriver(driver);
-        System.out.println("Driver added: " + driverAdded); // Debugging statement
-    }
+        // Save user along with their role-specific information
+        boolean userAdded = User_MegacityDAO.addUser(user, customer, driver);
 
-    if (userAdded) {
-        HttpSession session = request.getSession();
-        session.setAttribute("username", username);
-        session.setAttribute("role", role);
-        response.sendRedirect("PAGES/Login.jsp");
-    } else {
-        request.setAttribute("errorMessage", "Registration failed.");
-        request.getRequestDispatcher("PAGES/Register.jsp").forward(request, response);
-    }
-}
-    // Method to hash the password using SHA-256
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(password.getBytes());
-            StringBuilder hexString = new StringBuilder();
-
-            for (byte b : hashBytes) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to hash password.", e);
+        if (userAdded) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            session.setAttribute("role", role);
+            response.sendRedirect("PAGES/Login.jsp");
+        } else {
+            request.setAttribute("errorMessage", "Registration failed.");
+            request.getRequestDispatcher("PAGES/Register.jsp").forward(request, response);
         }
     }
+
+    // Method to hash the password using SHA-256
+//    private String hashPassword(String password) {
+//        try {
+//            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//            byte[] hashBytes = digest.digest(password.getBytes());
+//            StringBuilder hexString = new StringBuilder();
+//
+//            for (byte b : hashBytes) {
+//                String hex = Integer.toHexString(0xff & b);
+//                if (hex.length() == 1) hexString.append('0');
+//                hexString.append(hex);
+//            }
+//
+//            return hexString.toString();
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException("Failed to hash password.", e);
+//        }
+//    }
 }

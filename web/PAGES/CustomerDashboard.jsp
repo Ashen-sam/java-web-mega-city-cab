@@ -91,11 +91,12 @@
 
         <div class="book__container_main">
             <!-- Initial Booking Form -->
-            <form id="initialForm" class="auth__form book__container" onsubmit="showAdditionalForm(event)">
-                <h3>Request a ride</h3>
-                <h3>Price: <span id="priceDisplay">Select locations</span></h3>
+            <form id="initialForm" class="auth__form book__container" action="<%=request.getContextPath()%>/BookingServlet" method="post" >
+                <div>
+                    <p>Request a ride</p>
+                    <p>Price: <span id="priceDisplay">Select locations</span></p>
+                </div>
                 <div class="auth__input">
-                    <label for="vehicleType">Vehicle Type:</label>
                     <select class="select" id="vehicleType" name="vehicleType" required>
                         <option value="" disabled selected>Select a vehicle type</option>
                         <option value="bike">Bike</option>
@@ -104,7 +105,6 @@
                     </select>
                 </div>
                 <div class="auth__input">
-                    <label for="pickupLocation">Pickup Location:</label>
                     <input type="text" id="pickupLocation" name="pickupLocation" list="colomboLocations" placeholder="e.g. Colombo Fort" required>
                     <datalist id="colomboLocations">
                         <option value="Colombo Fort">
@@ -118,43 +118,27 @@
                     </datalist>
                 </div>
                 <div class="auth__input">
-                    <label for="dropLocation">Drop Location:</label>
                     <input type="text" id="dropLocation" name="dropLocation" list="colomboLocations" placeholder="e.g. Colombo 7" required>
                 </div>
                 <div class="auth__input">
-                    <label for="bookingDate">Booking Date:</label>
                     <input type="date" id="bookingDate" name="bookingDate" required>
                 </div>
+
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="phone" placeholder="Phone Number" required>
+                <input type="text" name="nic" placeholder="NIC" required>
                 <input class="auth__submit" type="submit" value="Book Vehicle">
+                 <input type="hidden" id="price" name="price" value="" />
             </form>
 
-            <form style="position: relative" id="additionalForm" class="auth__form book__container hidden" action="<%=request.getContextPath()%>/submitBooking" method="post">
-                <h3>Enter Your Details</h3>
-                <div class="auth__input">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="auth__input">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" name="address" required>
-                </div>
-                <div class="auth__input">
-                    <label for="phone">Phone Number:</label>
-                    <input type="text" id="phone" name="phone" required>
-                </div>
-                <div class="auth__input">
-                    <label for="phone">NIC</label>
-                    <input type="text" id="phone" name="phone" required>
-                </div>
-                <input class="auth__submit" type="submit" value="Confirm Booking">
-                <button style="position: absolute;top: 10px ;right: 10px" type="button" class="auth__submit" onclick="showInitialForm()">Back</button>
-            </form>
+
 
             <div>
                 <img height="460" src="../IMG/online-cab-booking-illustration-download-in-svg-png-gif-file-formats--order-taxi-app-service-pack-services-illustrations-3013176.webp"/>
             </div>
         </div>
-    
+
     </body>
     <script src="../VALIDATIONS/priceCalculate.js"></script>
 </html>

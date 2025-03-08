@@ -10,7 +10,7 @@ public class Driver_MegacityDAO {
         try (Connection conn = DBConnection.getConnection()) {
             // SQL query to insert a new driver with all fields
             String sql = "INSERT INTO drivers_megacity (name, phone_number, nic, gender, address, " +
-                         "license_expiry_date, driving_experience, vehicle_type, vehicle_registration_number, " +
+                         "license__number, vehicle_type, vehicle_registration_number, " +
                          "vehicle_make_model) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // Prepare the statement
@@ -20,8 +20,7 @@ public class Driver_MegacityDAO {
             ps.setString(3, driver.getNic());
             ps.setString(4, driver.getGender());
             ps.setString(5, driver.getAddress());
-            ps.setString(6, driver.getLicenseExpiryDate());
-            ps.setInt(7, driver.getDrivingExperience());
+            ps.setString(6, driver.getLicenseNumber());
             ps.setString(8, driver.getVehicleType());
             ps.setString(9, driver.getVehicleRegistrationNumber());
             ps.setString(10, driver.getVehicleMakeModel());

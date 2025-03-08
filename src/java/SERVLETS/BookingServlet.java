@@ -1,3 +1,5 @@
+package SERVLETS;
+
 import DAO.Booking_MegacityDAO;
 import DAO.DBConnection;
 import javax.servlet.ServletException;
@@ -7,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @WebServlet("/BookingServlet")
 public class BookingServlet extends HttpServlet {
@@ -14,65 +19,68 @@ public class BookingServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dbDAO = new DBConnection();
+        dbDAO = new DBConnection(); // Initialize the DBConnection instance
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pickup = request.getParameter("pickup");
-        String drop = request.getParameter("drop");
-        String date = request.getParameter("date");
+        // Retrieve parameters from the request
+        String pickup = request.getParameter("pickupLocation");
+        String drop = request.getParameter("dropLocation");
+        String date = request.getParameter("bookingDate");
         String vehicleType = request.getParameter("vehicleType");
-        String price = request.getParameter("price"); // Get the calculated price
+        String price = request.getParameter("price");
         String nic = request.getParameter("nic");
-        String mobile = request.getParameter("mobile");
-        String email = request.getParameter("email");
 
         try (Connection connection = dbDAO.getConnection()) {
             Booking_MegacityDAO bookingDAO = new Booking_MegacityDAO(connection);
-            
-            // Example logic to get customer_reg_id and vehicle_id
+
             int customerRegId = getCustomerRegIdByNIC(nic, connection);
-            
-            // Get appropriate vehicle based on type selection
+            if (customerRegId == -1) {
+                request.setAttribute("message", "Customer not found with this NIC.");
+                request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
+                return;
+            }
+
             int vehicleId = getAvailableVehicleByType(vehicleType, connection);
-            
-            // Create booking
-            boolean bookingSuccess = bookingDAO.createBooking(customerRegId, vehicleId, pickup, drop, date, "10:00:00");
-            
+            if (vehicleId == -1) {
+                request.setAttribute("message", "No available vehicles of this type.");
+                request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
+                return;
+            }
+
+            boolean bookingSuccess = bookingDAO.createBooking(customerRegId, vehicleId, pickup, drop, date, "10:00:00", Double.parseDouble(price));
             if (bookingSuccess) {
-                // Store the price in the booking record
-                boolean priceUpdated = updateBookingPrice(bookingDAO.getLastBookingId(), price, connection);
-                
-                if (priceUpdated) {
-                    request.setAttribute("message", "Booking successful! Your fare is " + price);
-                } else {
-                    request.setAttribute("message", "Booking successful! But there was an issue storing the price.");
-                }
+                request.setAttribute("message", "Booking successful! Your fare is " + price);
             } else {
                 request.setAttribute("message", "Booking failed. Please try again.");
             }
-        } catch (Exception e) {
+
+            request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
+
+        } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("message", "An error occurred while processing your booking.");
+            request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
         }
-        
-        // Forward to a JSP page to display the result
-//        request.getRequestDispatcher("booking-result.jsp").forward(request, response);
     }
 
-    private int getCustomerRegIdByNIC(String nic, Connection connection) {
-        // Implement logic to fetch customer_reg_id from NIC
-        return 1; // Placeholder
+    private int getCustomerRegIdByNIC(String nic, Connection connection) throws SQLException {
+        String sql = "SELECT customer_reg_id FROM customers_megacity WHERE nic = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, nic);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getInt("customer_reg_id") : -1;
+            }
+        }
     }
 
-    private int getAvailableVehicleByType(String vehicleType, Connection connection) {
-        // Implement logic to find an available vehicle of the specified type
-        return 1; // Placeholder
-    }
-    
-    private boolean updateBookingPrice(int bookingId, String price, Connection connection) {
-        // Implement logic to update the booking with the calculated price
-        // This would require adding a 'price' column to your bookings_megacity table
-        return true; // Placeholder
+    private int getAvailableVehicleByType(String vehicleType, Connection connection) throws SQLException {
+        String sql = "SELECT vehicle_id FROM vehicles_megacity WHERE vehicle_type = ? LIMIT 1";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, vehicleType);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getInt("vehicle_id") : -1;
+            }
+        }
     }
 }
