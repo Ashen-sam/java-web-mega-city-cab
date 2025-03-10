@@ -2,6 +2,31 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/Login.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/DriverDashboardServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/CustomerDashboard.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/MODEL/Driver_Megacity.java</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/Register.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/MODEL/Booking_Megacity.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/DAO/User_MegacityDAO.java</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/Dashboard-booking.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/BookingServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/DAO/DriverDashboardDAO.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/UpdateBookingStatusServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/LoginServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/DAO/Booking_MegacityDAO.java</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/Business.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/BookingConfirmation.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/nbproject/build-impl.xml</file>
+            <file>file:/C:/projects-uni/web-app-java/web/VALIDATIONS/priceCalculate.js</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/DAO/Driver_MegacityDAO.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/DriverServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/SERVLETS/RegisterServlet.java</file>
+            <file>file:/C:/projects-uni/web-app-java/web/PAGES/DriverDashboard.jsp</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/MODEL/Customer_Megacity.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/DAO/DBConnection.java</file>
+            <file>file:/C:/projects-uni/web-app-java/src/java/MODEL/User_Megacity.java</file>
+        </group>
     </open-files>
 </project-private>

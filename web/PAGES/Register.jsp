@@ -25,7 +25,7 @@
 
         if (role.value === "driver") {
             additionalFields.innerHTML = `
-                <select id="gender" name="gender" class="select" required>
+                <select style='width:400px' id="gender" name="gender" class="select" required>
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -33,21 +33,21 @@
                 </select>
                 <div class="error" id="genderError"></div>
 
-                <input type='text' placeholder='Address' id='address' name='address' />
+                <input style='width:370px'  type='text' placeholder='Address' id='address' name='address' />
                 <div class="error" id="addressError"></div>
 
-                <input type='text' placeholder='License Number' id='license_number' name='license_number' />
+                <input  style='width:370px'  type='text' placeholder='License Number' id='license_number' name='license_number' />
                 <div class="error" id="license_numberError"></div>
 
                 
 
-                <input type='text' placeholder='Vehicle Type' id='vehicle_type' name='vehicle_type' />
+                <input  style='width:370px'  type='text' placeholder='Vehicle Type' id='vehicle_type' name='vehicle_type' />
                 <div class="error" id="vehicleTypeError"></div>
 
-                <input type='text' placeholder='Vehicle Registration Number' id='vehicle_registration_number' name='vehicle_registration_number' />
+                <input  style='width:370px'  type='text' placeholder='Vehicle Registration Number' id='vehicle_registration_number' name='vehicle_registration_number' />
                 <div class="error" id="vehicleRegError"></div>
 
-                <input type='text' placeholder='Vehicle Make and Model' id='vehicle_make_model' name='vehicle_make_model' />
+                <input  style='width:370px'  type='text' placeholder='Vehicle Make and Model' id='vehicle_make_model' name='vehicle_make_model' />
                 <div class="error" id="vehicleMakeModelError"></div>
             `;
 
