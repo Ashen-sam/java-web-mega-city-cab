@@ -8,6 +8,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../STYLES/admin-styles.css" />
+        <link rel="stylesheet" href="../STYLES/auth-styles.css" />
+
         <title>Admin  - MegaCab</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,12 +18,19 @@
 
     </head>
     <body>
+        <%
+            String username = "";
+            if (session != null && session.getAttribute("username") != null) {
+                username = (String) session.getAttribute("username");
+            }
+        %>
         <div class="admin-container">
             <div class="admin-header">
-                <div class="admin-logo">
-                    <i class="fas fa-taxi" style="font-size: 24px;"></i>
-                    <h3>MegaCab Admin</h3>
-                </div>
+                <Button class="admin-btn " style="display: flex;justify-content: center;align-items:center;gap:10px">
+                    <i class="fa-solid fa-user"></i>
+                    <p><%= username%></p>
+
+                </Button>
                 <div class="admin-actions">
 
                     <form action="<%=request.getContextPath()%>/LogoutServlet" method="post" style="display: inline;">
@@ -82,9 +91,6 @@
                         </form>
                     </div>
 
-
-
-                    <!-- Driver Table -->
                     <table class="driver-table">
                         <thead>
                             <tr>
@@ -145,7 +151,6 @@
             </div>
         </div>
 
-        <!-- Edit Form Popup -->
         <div class="edit-form-popup" id="editFormPopup">
             <div class="edit-form-content">
                 <div class="edit-form-header">
@@ -195,9 +200,6 @@
             function openEditForm(id) {
                 document.getElementById('edit-id').value = id;
                 document.getElementById('editFormPopup').style.display = 'flex';
-
-                // Here you would typically load the driver data into the form
-                // via AJAX or from a data attribute
             }
 
             function closeEditForm() {

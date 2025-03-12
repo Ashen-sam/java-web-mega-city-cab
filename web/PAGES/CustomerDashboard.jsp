@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,17 +15,32 @@
 
     </head>
     <body>
+        <%
+            // Check if user is logged in
+            String username = (String) session.getAttribute("username");
+            if (username == null) {
+                // Redirect to login page if not logged in
+                response.sendRedirect(request.getContextPath() + "/PAGES/Login.jsp");
+                return;
+            }
+        %>
         <div class="header">
             <div class="logo">
                 <i class="fas fa-taxi" style="font-size: 24px;"></i>
                 <h3>MegaCab</h3>
             </div>
             <div class="nav-links">
+
                 <a href="../PAGES/About.jsp">About</a>
                 <a href="../PAGES/Business.jsp">Business</a>
                 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post">
                     <input class="auth__submit" type="submit" value="Logout">
                 </form>
+                <Button class="auth__submit " style="display: flex;justify-content: center;align-items:center;gap:10px">
+                    <i class="fa-solid fa-user"></i>
+                    <p><%= username%></p>
+
+                </Button>
             </div>
         </div>
 

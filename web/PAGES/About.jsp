@@ -20,6 +20,15 @@
 
     </head>
     <body>
+        <%
+            // Check if user is logged in
+            String username = (String) session.getAttribute("username");
+            if (username == null) {
+                // Redirect to login page if not logged in
+                response.sendRedirect(request.getContextPath() + "/PAGES/Login.jsp");
+                return;
+            }
+        %>
         <div class="header">
             <div class="logo">
                 <i class="fas fa-taxi" style="font-size: 24px;"></i>
@@ -32,6 +41,11 @@
                 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post">
                     <input class="auth__submit" type="submit" value="Logout">
                 </form>
+                <Button class="auth__submit " style="display: flex;justify-content: center;align-items:center;gap:10px">
+                    <i class="fa-solid fa-user"></i>
+                    <p><%= username%></p>
+
+                </Button>
             </div>
         </div>
 

@@ -18,9 +18,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     </head>
-  
+
     <body>
-        <!-- Header Navigation -->
+              <%
+            // Check if user is logged in
+            String username = (String) session.getAttribute("username");
+            if (username == null) {
+                // Redirect to login page if not logged in
+                response.sendRedirect(request.getContextPath() + "/PAGES/Login.jsp");
+                return;
+            }
+        %>
         <div class="header">
             <div class="logo">
                 <i class="fas fa-taxi" style="font-size: 24px;"></i>
@@ -32,10 +40,14 @@
                 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post">
                     <input class="auth__submit" type="submit" value="Logout">
                 </form>
+                <Button class="auth__submit " style="display: flex;justify-content: center;align-items:center;gap:10px">
+                    <i class="fa-solid fa-user"></i>
+                    <p><%= username%></p>
+
+                </Button>
             </div>
         </div>
-        
-        <!-- Hero Section -->
+
         <section class="business-hero">
             <h1>MegaCab for Business</h1>
             <p>Streamline your corporate transportation needs with our dedicated business solutions. Save time, reduce costs, and keep your team moving efficiently.</p>
@@ -44,13 +56,12 @@
                 <a href="#benefits" class="secondary-btn">See Benefits</a>
             </div>
         </section>
-        
-        <!-- Main Content Sections -->
+
         <div class="text-align">
             <h2>Business Transport Solutions</h2>
             <p>Customized transportation services designed for your business needs</p>
         </div>
-        
+
         <div class="container__flex">
             <div class="container">
                 <div class="text-section">
@@ -80,8 +91,7 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Business Solutions Section -->
+
         <section class="business-solutions">
             <div class="solutions-title">
                 <h2>Comprehensive Business Solutions</h2>
@@ -114,8 +124,6 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Benefits Section -->
         <section id="benefits" class="benefits-section">
             <div class="benefits">
                 <h3>Why Choose MegaCab for Business</h3>
@@ -129,14 +137,11 @@
                 <a href="#">See terms and conditions</a>
             </div>
         </section>
-        
-        <!-- Call to Action -->
         <section class="business-cta">
             <div class="cta-container">
                 <h2>Ready to transform your business transportation?</h2>
                 <p>Connect with our business solutions team to get started with a customized plan for your organization's needs.</p>
-                
-                <!-- Contact Form -->
+
                 <div id="contact-form" class="contact-form">
                     <form action="#" method="post">
                         <div class="form-group">
@@ -175,8 +180,7 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Footer -->
+
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-grid">
