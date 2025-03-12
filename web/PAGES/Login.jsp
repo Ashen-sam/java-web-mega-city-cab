@@ -23,7 +23,12 @@
                 }
             %>
         </div>
-
+    <% if (session.getAttribute("errorMessage") != null) { %>
+                    <div class="errorMessage_login_cred" id="errorMessage" style="color: red; margin-bottom: 15px; text-align: center;">
+                        <%= session.getAttribute("errorMessage") %>
+                    </div>
+                    <% session.removeAttribute("errorMessage"); %>
+                <% } %>
 
         <div class="main__container">
             <div class="auth__container">

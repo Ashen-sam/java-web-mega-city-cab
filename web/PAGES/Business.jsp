@@ -9,133 +9,222 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>BUSINESS</title>  <link rel="stylesheet" href="../STYLES/auth-styles.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MegaCab Business Solutions</title>
+        <link rel="stylesheet" href="../STYLES/auth-styles.css" />
+        <link rel="stylesheet" href="../STYLES/business-styles.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     </head>
-    <style>
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .logo img {
-            height: 50px; /* Adjust as needed */
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center; /* Space between links */
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 400;
-        }
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-        .hidden {
-            display: none; /* Class to hide elements */
-        }
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-radius: 10px;
-
-        }
-        .text-section {
-            max-width: 50%;
-        }
-        .benefits {
-            background-color: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .button {
-            background-color: black;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .container__flex{
-            max-width: 1100px;
-            margin: auto;
-
-        }
-        .text-align{
-            max-width: 1100px;
-            margin: 80px auto 0 auto;
-            text-align:center;
-        }
-    </style>
+  
     <body>
+        <!-- Header Navigation -->
         <div class="header">
             <div class="logo">
+                <i class="fas fa-taxi" style="font-size: 24px;"></i>
                 <h3>MegaCab</h3>
             </div>
             <div class="nav-links">
                 <a href="../PAGES/About.jsp">About</a>
-                <a href="#">Help</a>
                 <a href="#">Business</a>
                 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post">
                     <input class="auth__submit" type="submit" value="Logout">
                 </form>
             </div>
         </div>
-
+        
+        <!-- Hero Section -->
+        <section class="business-hero">
+            <h1>MegaCab for Business</h1>
+            <p>Streamline your corporate transportation needs with our dedicated business solutions. Save time, reduce costs, and keep your team moving efficiently.</p>
+            <div class="cta-buttons">
+                <a href="#contact-form" class="primary-btn">Contact Sales</a>
+                <a href="#benefits" class="secondary-btn">See Benefits</a>
+            </div>
+        </section>
+        
+        <!-- Main Content Sections -->
         <div class="text-align">
-            <h3 >Get your ride right with Uber Reserve</h3>
-            <p>Choose date and time</p>
+            <h2>Business Transport Solutions</h2>
+            <p>Customized transportation services designed for your business needs</p>
         </div>
+        
         <div class="container__flex">
             <div class="container">
                 <div class="text-section">
-
+                    <h3>MegaCab Reserve</h3>
+                    <p>Plan ahead with our reservation service that ensures your team always has a ride when needed.</p>
                     <h3>Benefits</h3>
                     <ul>
-                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                        <li>⏳ Extra wait time included to meet your ride.</li>
-                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
+                        <li><i class="far fa-calendar-alt"></i> Choose your exact pickup time up to 90 days in advance.</li>
+                        <li><i class="far fa-clock"></i> Extra wait time included to meet your ride.</li>
+                        <li><i class="far fa-times-circle"></i> Cancel at no charge up to 60 minutes in advance.</li>
                     </ul>
                 </div>
-                <img src="../IMG/online-taxi-booking-illustration-download-in-svg-png-gif-file-formats--car-cab-city-service-pack-holidays-illustrations-4046973.webp" alt="Uber Reserve" width="300">
+                <img src="../IMG/online-taxi-booking-illustration-download-in-svg-png-gif-file-formats--car-cab-city-service-pack-holidays-illustrations-4046973.webp" alt="MegaCab Reserve">
             </div>
 
             <div class="container">
-                <img src="../IMG/cab-app-illustration-download-in-svg-png-gif-file-formats--phone-online-car-booking-mobile-apps-and-services-pack-design-development-illustrations-3742564.webp" alt="Uber Reserve" width="300">
-
+                <img src="../IMG/cab-app-illustration-download-in-svg-png-gif-file-formats--phone-online-car-booking-mobile-apps-and-services-pack-design-development-illustrations-3742564.webp" alt="MegaCab Business App">
                 <div class="text-section">
-                    <h3>Get your ride right with Uber Reserve</h3>
-                    <p>Choose date and time</p>
-                    <h3>Benefits</h3>
+                    <h3>Business Dashboard</h3>
+                    <p>Manage all your transportation needs from one centralized platform. Track expenses, monitor usage, and optimize your transportation budget.</p>
+                    <h3>Key Features</h3>
                     <ul>
-                        <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                        <li>⏳ Extra wait time included to meet your ride.</li>
-                        <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
+                        <li><i class="fas fa-chart-line"></i> Real-time expense tracking and reporting</li>
+                        <li><i class="fas fa-users"></i> Manage multiple team members from one account</li>
+                        <li><i class="fas fa-receipt"></i> Automated invoicing and receipt management</li>
                     </ul>
                 </div>
             </div>
-
-            <div class="benefits">
-                <h3>Benefits</h3>
-                <ul>
-                    <li>📅 Choose your exact pickup time up to 90 days in advance.</li>
-                    <li>⏳ Extra wait time included to meet your ride.</li>
-                    <li>❌ Cancel at no charge up to 60 minutes in advance.</li>
-                </ul>
-                <a href="#">See terms</a>
-            </div>
         </div>
+        
+        <!-- Business Solutions Section -->
+        <section class="business-solutions">
+            <div class="solutions-title">
+                <h2>Comprehensive Business Solutions</h2>
+                <p>Choose the right transportation solution for your business needs</p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Corporate Accounts</h3>
+                    <p>Set up a corporate account with dedicated support, centralized billing, and customized reporting for your business needs.</p>
+                    <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-plane-arrival"></i>
+                    </div>
+                    <h3>Airport Transfers</h3>
+                    <p>Reliable airport transportation for your team with flight tracking, wait time, and seamless coordination.</p>
+                    <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Event Transportation</h3>
+                    <p>Coordinate transportation for conferences, meetings, and corporate events with ease.</p>
+                    <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Benefits Section -->
+        <section id="benefits" class="benefits-section">
+            <div class="benefits">
+                <h3>Why Choose MegaCab for Business</h3>
+                <ul>
+                    <li><i class="fas fa-money-bill-wave"></i> <span>Reduce transportation costs with volume discounts and efficient routing</span></li>
+                    <li><i class="fas fa-clock"></i> <span>Save time with priority booking and guaranteed availability</span></li>
+                    <li><i class="fas fa-chart-pie"></i> <span>Gain visibility into transportation spending with detailed analytics</span></li>
+                    <li><i class="fas fa-shield-alt"></i> <span>Enhanced safety protocols for all business travelers</span></li>
+                    <li><i class="fas fa-headset"></i> <span>Dedicated business support team available 24/7</span></li>
+                </ul>
+                <a href="#">See terms and conditions</a>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="business-cta">
+            <div class="cta-container">
+                <h2>Ready to transform your business transportation?</h2>
+                <p>Connect with our business solutions team to get started with a customized plan for your organization's needs.</p>
+                
+                <!-- Contact Form -->
+                <div id="contact-form" class="contact-form">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Contact Person</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Business Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employees">Number of Employees</label>
+                            <select id="employees" name="employees" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="1-10">1-10</option>
+                                <option value="11-50">11-50</option>
+                                <option value="51-200">51-200</option>
+                                <option value="201-500">201-500</option>
+                                <option value="501+">501+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">How can we help your business?</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <input type="submit" class="auth__submit" value="Submit Request">
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-grid">
+                    <div class="footer-logo">
+                        <h3>MegaCab</h3>
+                        <p>Your reliable transportation partner in the city. Available 24/7 to take you where you need to go, safely and comfortably.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="../PAGES/About.jsp">About Us</a></li>
+                            <li><a href="#">Our Services</a></li>
+                            <li><a href="../PAGES/Business.jsp">Business Solutions</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Business Solutions</h4>
+                        <ul>
+                            <li><a href="#">Corporate Accounts</a></li>
+                            <li><a href="#">Event Transportation</a></li>
+                            <li><a href="#">Airport Transfers</a></li>
+                            <li><a href="#">Business Travel</a></li>
+                            <li><a href="#">Enterprise Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Safety Guidelines</a></li>
+                            <li><a href="#">COVID-19 Precautions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 MegaCab. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

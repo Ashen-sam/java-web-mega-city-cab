@@ -42,6 +42,10 @@ public class LoginServlet extends HttpServlet {
                     break;
             }
         } else {
+              HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Invalid username or password.");
+            // Keep the username to improve user experience
+            session.setAttribute("lastUsername", username);
             String errorMessage = "Invalid username or password.";
             response.sendRedirect("PAGES/Login.jsp?errorMessage=" + URLEncoder.encode(errorMessage, "UTF-8"));
         }

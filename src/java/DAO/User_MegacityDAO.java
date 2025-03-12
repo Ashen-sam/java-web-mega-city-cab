@@ -105,7 +105,7 @@ public class User_MegacityDAO {
         }
     }
 
-    public static User_Megacity getUserByUsernameAndPassword(String username, String password) {
+        public static User_Megacity getUserByUsernameAndPassword(String username, String password) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM users_megacity WHERE username = ? AND password = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
