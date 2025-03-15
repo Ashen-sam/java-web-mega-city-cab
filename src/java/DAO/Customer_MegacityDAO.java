@@ -3,9 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+import MODEL.Booking_Megacity;
 import MODEL.Customer_Megacity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+import MODEL.Booking_Megacity;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -30,4 +38,35 @@ public class Customer_MegacityDAO {
             return false;
         }
     }
+    public static List<Booking_Megacity> getApprovedBookingsForCustomer(String username) throws SQLException, ClassNotFoundException {
+        List<Booking_Megacity> approvedBookings = new ArrayList<>();
+        String query = "SELECT b.* FROM bookings_megacity b " +
+                       "JOIN customers_megacity c ON b.customer_reg_id = c.customer_reg_id " +
+                       "WHERE c.name = ? AND b.status = 'Approved'";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, username);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Booking_Megacity booking = new Booking_Megacity();
+                    booking.setBookingId(rs.getInt("booking_id"));
+                    booking.setCustomerRegId(rs.getInt("customer_reg_id"));
+                    booking.setVehicleId(rs.getInt("vehicle_id"));
+                    booking.setPickupLocation(rs.getString("pickup_location"));
+                    booking.setDropLocation(rs.getString("drop_location"));
+                    booking.setBookingDate(rs.getString("booking_date"));
+                    booking.setPrice(rs.getDouble("price"));
+                    booking.setStatus(rs.getString("status"));
+                    
+                    approvedBookings.add(booking);
+                }
+            }
+        }
+        
+        return approvedBookings;
+    }
 }
+

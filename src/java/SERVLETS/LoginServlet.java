@@ -18,7 +18,6 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        // Fetch user from DAO
         User_Megacity user = User_MegacityDAO.getUserByUsernameAndPassword(username, password);
 
         if (user != null) {
@@ -26,7 +25,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("username", user.getUsername());
             session.setAttribute("role", user.getRole());
 
-            // Redirect based on user role
             switch (user.getRole()) {
                 case "admin":
                     response.sendRedirect("PAGES/AdminDashboard.jsp");

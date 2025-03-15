@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet("/BookingServlet")
 public class BookingServlet extends HttpServlet {
+
     private DBConnection dbDAO;
 
     @Override
@@ -24,7 +25,7 @@ public class BookingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         if (action == null) {
             // Handle customer booking creation
             handleNewBooking(request, response);
@@ -33,7 +34,7 @@ public class BookingServlet extends HttpServlet {
             handleDriverAction(request, response, action);
         }
     }
-    
+
     private void handleNewBooking(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Retrieve parameters from the request
         String pickup = request.getParameter("pickupLocation");
@@ -42,51 +43,55 @@ public class BookingServlet extends HttpServlet {
         String vehicleType = request.getParameter("vehicleType");
         String price = request.getParameter("price");
         String nic = request.getParameter("nic");
-        
+
         try (Connection connection = dbDAO.getConnection()) {
             Booking_MegacityDAO bookingDAO = new Booking_MegacityDAO(connection);
             int customerRegId = getCustomerRegIdByNIC(nic, connection);
             if (customerRegId == -1) {
-                request.setAttribute("message", "Customer not found with this NIC.");
-                request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
+                request.getSession().setAttribute("message", "Customer not found with this NIC.");
+
+                          response.sendRedirect(request.getContextPath() + "/PAGES/CustomerDashboard.jsp");
+
                 return;
             }
-            
+
             int vehicleId = getAvailableVehicleByType(vehicleType, connection);
             if (vehicleId == -1) {
                 request.setAttribute("message", "No available vehicles of this type.");
                 request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
                 return;
             }
-            
+
             boolean bookingSuccess = bookingDAO.createBooking(customerRegId, vehicleId, pickup, drop, date, "10:00:00", Double.parseDouble(price));
             if (bookingSuccess) {
-                request.setAttribute("message", "Booking successful! Your fare is " + price);
+                request.getSession().setAttribute("message", "Booking successful! Your fare is " + price);
+
             } else {
                 request.setAttribute("message", "Booking failed. Please try again.");
+
             }
-            request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/PAGES/CustomerDashboard.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("message", "An error occurred while processing your booking.");
             request.getRequestDispatcher("PAGES/CustomerDashboard.jsp").forward(request, response);
         }
     }
-    
-    private void handleDriverAction(HttpServletRequest request, HttpServletResponse response, String action) 
+
+    private void handleDriverAction(HttpServletRequest request, HttpServletResponse response, String action)
             throws ServletException, IOException {
         String bookingIdStr = request.getParameter("bookingId");
         if (bookingIdStr == null || bookingIdStr.isEmpty()) {
             response.sendRedirect("DriverDashboard.jsp?error=invalid_booking");
             return;
         }
-        
+
         int bookingId = Integer.parseInt(bookingIdStr);
-        
+
         try (Connection connection = dbDAO.getConnection()) {
             Booking_MegacityDAO bookingDAO = new Booking_MegacityDAO(connection);
             boolean success = false;
-            
+
             switch (action) {
                 case "approve":
                     success = bookingDAO.updateBookingStatus(bookingId, "approved");
@@ -101,13 +106,13 @@ public class BookingServlet extends HttpServlet {
                     response.sendRedirect("DriverDashboard.jsp?error=invalid_action");
                     return;
             }
-            
+
             if (success) {
                 response.sendRedirect("DriverDashboard.jsp?success=true&action=" + action);
             } else {
                 response.sendRedirect("DriverDashboard.jsp?error=failed");
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("DriverDashboard.jsp?error=database");
@@ -133,4 +138,5 @@ public class BookingServlet extends HttpServlet {
             }
         }
     }
+
 }

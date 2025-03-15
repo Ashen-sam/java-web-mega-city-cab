@@ -1,106 +1,107 @@
 package DAO;
 
+import MODEL.Customer_Megacity;
+import MODEL.Driver_Megacity;
 import MODEL.User_Megacity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import MODEL.Driver_Megacity;
-import MODEL.Customer_Megacity;
 import java.sql.SQLException;
 
 public class User_MegacityDAO {
-
-    public static boolean addUser(User_Megacity user, Customer_Megacity customer, Driver_Megacity driver) {
+public static boolean addUser(User_Megacity user, Customer_Megacity customer, Driver_Megacity driver) {
         Connection conn = null;
-        PreparedStatement userPs = null, customerPs = null, driverPs = null;
+        PreparedStatement pstmtUser = null;
+        PreparedStatement pstmtVehicle = null;
+        PreparedStatement pstmtDriver = null;
+        ResultSet rs = null;
 
         try {
             conn = DBConnection.getConnection();
-            if (conn == null) {
-                System.out.println("Failed to establish connection.");
-                return false;
-            }
-            conn.setAutoCommit(false); // Start transaction
+            conn.setAutoCommit(false); 
 
-            // Step 1: Insert into users_megacity table and get the generated user_id
-            String userSql = "INSERT INTO users_megacity (username, password, role) VALUES (?, ?, ?)";
-            userPs = conn.prepareStatement(userSql, PreparedStatement.RETURN_GENERATED_KEYS);
-            userPs.setString(1, user.getUsername());
-            userPs.setString(2, user.getPassword());
-            userPs.setString(3, user.getRole());
-            int affectedRows = userPs.executeUpdate();
+        String sqlUser = "INSERT INTO users_megacity (username, password, role) VALUES (?, ?, ?)";
+        pstmtUser = conn.prepareStatement(sqlUser, PreparedStatement.RETURN_GENERATED_KEYS);
+        pstmtUser.setString(1, user.getUsername());
+        pstmtUser.setString(2, user.getPassword());
+        pstmtUser.setString(3, user.getRole());
+        pstmtUser.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("Inserting user failed, no rows affected.");
-            }
+        int userId = -1;
+        rs = pstmtUser.getGeneratedKeys();
+        if (rs.next()) {
+            userId = rs.getInt(1); 
+        }
 
-            int userId = -1;
-            try (ResultSet generatedKeys = userPs.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    userId = generatedKeys.getInt(1); // Get the auto-incremented user_id
-                } else {
-                    throw new SQLException("User insertion failed, no ID obtained.");
+        if (userId == -1) {
+            throw new SQLException("Failed to retrieve user_id.");
+        }
+
+        if ("customer".equalsIgnoreCase(user.getRole())) {
+            String sqlCustomer = "INSERT INTO customers_megacity (name, nic, phone_number) VALUES (?, ?, ?)";
+            pstmtUser = conn.prepareStatement(sqlCustomer);
+            pstmtUser.setString(1, customer.getName());
+            pstmtUser.setString(2, customer.getNic());
+            pstmtUser.setString(3, customer.getPhoneNumber());
+            pstmtUser.executeUpdate();
+            } else if ("driver".equalsIgnoreCase(user.getRole())) {
+                String sqlVehicle = "INSERT INTO vehicles_megacity (license_plate, model, vehicle_type) VALUES (?, ?, ?)";
+                pstmtVehicle = conn.prepareStatement(sqlVehicle, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmtVehicle.setString(1, driver.getVehicleRegistrationNumber());
+                pstmtVehicle.setString(2, driver.getVehicleMakeModel());
+                pstmtVehicle.setString(3, driver.getVehicleType());
+                pstmtVehicle.executeUpdate();
+
+                int vehicleId = -1;
+                rs = pstmtVehicle.getGeneratedKeys();
+                if (rs.next()) {
+                    vehicleId = rs.getInt(1);
                 }
-            }
 
-            // Step 2: Insert into customers_megacity if the user is a customer
-            if ("customer".equalsIgnoreCase(user.getRole()) && customer != null) {
-                String customerSql = "INSERT INTO customers_megacity (customer_reg_id, name, nic, phone_number) VALUES (?, ?, ?, ?)";
-                customerPs = conn.prepareStatement(customerSql);
-                customerPs.setInt(1, userId); // Use the generated userId here
-                customerPs.setString(2, customer.getName());
-                customerPs.setString(3, customer.getNic());
-                customerPs.setString(4, customer.getPhoneNumber());
-                customerPs.executeUpdate();
-            }
+                if (vehicleId == -1) {
+                    throw new SQLException("Failed to retrieve vehicle_id.");
+                }
 
-            // Step 3: Insert into drivers_megacity if the user is a driver
-            else if ("driver".equalsIgnoreCase(user.getRole()) && driver != null) {
-                String driverSql = "INSERT INTO drivers_megacity (driver_id, name, phone_number, nic, gender, address, license_number, vehicle_type, vehicle_registration_number, vehicle_make_model) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                driverPs = conn.prepareStatement(driverSql);
-                driverPs.setInt(1, userId); // Use the generated userId here as the driver_id
-                driverPs.setString(2, driver.getName());
-                driverPs.setString(3, driver.getPhoneNumber());
-                driverPs.setString(4, driver.getNic());
-                driverPs.setString(5, driver.getGender());
-                driverPs.setString(6, driver.getAddress()); // Ensure address is set
-                driverPs.setString(7, driver.getLicenseNumber());
-                driverPs.setString(8, driver.getVehicleType());
-                driverPs.setString(9, driver.getVehicleRegistrationNumber());
-                driverPs.setString(10, driver.getVehicleMakeModel());
-                driverPs.executeUpdate();
+                driver.setVehicleId(vehicleId);
+
+                String sqlDriver = "INSERT INTO drivers_megacity (license_number, vehicle_id, gender, address, vehicle_type, vehicle_registration_number, vehicle_make_model, name, nic, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                pstmtDriver = conn.prepareStatement(sqlDriver);
+                pstmtDriver.setString(1, driver.getLicenseNumber());
+                pstmtDriver.setInt(2, driver.getVehicleId());
+                pstmtDriver.setString(3, driver.getGender());
+                pstmtDriver.setString(4, driver.getAddress());
+                pstmtDriver.setString(5, driver.getVehicleType());
+                pstmtDriver.setString(6, driver.getVehicleRegistrationNumber());
+                pstmtDriver.setString(7, driver.getVehicleMakeModel());
+                pstmtDriver.setString(8, driver.getName());
+                pstmtDriver.setString(9, driver.getNic());
+                pstmtDriver.setString(10, driver.getPhoneNumber());
+                pstmtDriver.executeUpdate();
             }
 
             conn.commit(); // Commit transaction
             return true;
 
         } catch (SQLException e) {
-            System.out.println("SQL Error during addUser: " + e.getMessage());
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback(); // Rollback in case of error
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Rollback transaction on error
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
             }
-            return false;
-        } catch (Exception e) {
-            System.out.println("Error during addUser: " + e.getMessage());
             e.printStackTrace();
             return false;
         } finally {
+            // Close resources
             try {
-                if (userPs != null) userPs.close();
-                if (customerPs != null) customerPs.close();
-                if (driverPs != null) driverPs.close();
-                if (conn != null) {
-                    conn.setAutoCommit(true); // Reset auto-commit
-                }
-            } catch (Exception closeEx) {
-                closeEx.printStackTrace();
+                if (rs != null) rs.close();
+                if (pstmtUser != null) pstmtUser.close();
+                if (pstmtVehicle != null) pstmtVehicle.close();
+                if (pstmtDriver != null) pstmtDriver.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }

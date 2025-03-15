@@ -1,7 +1,8 @@
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*, DAO.DBConnection"%>
 <%@page import="MODEL.Driver_Megacity"%>
-<%@page import="DAO.Driver_MegacityDAO"%>
+<%@page import="DAO.DriverDashboardDAO"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +11,7 @@
         <link rel="stylesheet" href="../STYLES/admin-styles.css" />
         <link rel="stylesheet" href="../STYLES/auth-styles.css" />
 
-        <title>Admin  - MegaCab</title>
+        <title>Admin - MegaCab</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;500;600;700&display=swap" rel="stylesheet" />
@@ -40,21 +41,31 @@
                     </form>
                 </div>
             </div>
-
+            <% if (session.getAttribute("errorMessage") != null) {%>
+            <div class="alert-message" id="alert-message" style="margin-bottom: 15px; text-align: center;">
+                <%= session.getAttribute("errorMessage")%>
+            </div>
+            <% session.removeAttribute("errorMessage"); %>
+            <% }%>
             <div class="admin">
                 <div class="admin-content">
-                    <div class="content-header">
-                        <h2 class="content-title">Driver Management</h2>
-                        <button class="admin-btn" id="add-driver-btn">
-                            <i class="fas fa-plus"></i> Add New Driver
-                        </button>
-                    </div>
 
-                    <!-- Add Driver Form -->
                     <div class="driver-form">
-                        <form action="DriverServlet" method="post">
+                        <h3>Add New Driver</h3>
+                        <form  action="<%=request.getContextPath()%>/AdminDriverServlet" method="post">
                             <input type="hidden" name="action" value="add">
                             <div class="form-grid">
+                                <!-- User Account Information -->
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password" required>
+                                </div>
+
+                                <!-- Personal Information -->
                                 <div class="form-group">
                                     <label for="name">Full Name</label>
                                     <input type="text" id="name" name="name" required>
@@ -68,24 +79,53 @@
                                     <input type="text" id="nic" name="nic" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="license_plate">license_plate</label>
+                                    <input type="text" id="license_plate" name="license_plate" required>
+                                </div>
+                                <!--                                <div class="form-group">
+                                                                    <label for="model">model</label>
+                                                                    <input type="text" id="model" name="model" required>
+                                                                </div>-->
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select class="select" style='width:400px' id="gender" name="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input id="address" name="address" rows="3" required></input>
+                                </div>
+                                <div class="form-group">
                                     <label for="license_number">License Number</label>
                                     <input type="text" id="license_number" name="license_number" required>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="vehicle_id">Vehicle ID</label>
-                                    <input type="text" id="vehicle_id" name="vehicle_id" required>
+                                    <label for="vehicle_type">Vehicle Type</label>
+
+                                    <select style='width:400px' id="vehicle_type" name="vehicle_type" class="select" required>
+                                        <option value="Bike">Bike</option>
+                                        <option value="Car">Car</option>
+                                        <option value="Van">Van</option>
+                                        <option value="Three_Wheeler">Three Wheeler</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select id="status" name="status" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
+                                    <label for="vehicle_registration">Vehicle Registration Number</label>
+                                    <input type="text" id="vehicle_registration_number" name="vehicle_registration_number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vehicle_model">Vehicle Make and Model</label>
+                                    <input type="text" id="vehicle_make_model" name="vehicle_make_model" required>
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <button type="submit" class="admin-btn">
-                                    <i class="fas fa-save"></i> Save Driver
+                                <button type="submit" style="margin-right: 5px" class="admin-btn">
+                                    <i class="fas fa-plus"></i> Add Driver
                                 </button>
                             </div>
                         </form>
@@ -98,49 +138,49 @@
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>NIC</th>
+                                <th>Gender</th>
                                 <th>License No</th>
-                                <th>Vehicle ID</th>
-                                <th>Status</th>
+                                <th>Vehicle Type</th>
+                                <th>Vehicle Reg</th>
+                                <th>Vehicle Model</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
-                                try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement("SELECT * FROM drivers_megacity"); ResultSet rs = ps.executeQuery()) {
+                                try {
+                                    DriverDashboardDAO driverDAO = new DriverDashboardDAO();
+                                    List<Driver_Megacity> driverList = driverDAO.getAllDrivers();
 
-                                    while (rs.next()) {
+                                    for (Driver_Megacity driver : driverList) {
                             %>
                             <tr>
-                                <td><%= rs.getInt("id")%></td>
-                                <td><%= rs.getString("name")%></td>
-                                <td><%= rs.getString("phone_number")%></td>
-                                <td><%= rs.getString("nic")%></td>
-                                <td><%= rs.getString("license_number")%></td>
-                                <td><%= rs.getString("vehicle_id")%></td>
-                                <td><span class="status-active">Active</span></td>
+                                <td><%= driver.getDriverId()%></td>
+                                <td><%= driver.getName()%></td>
+                                <td><%= driver.getPhoneNumber()%></td>
+                                <td><%= driver.getNic()%></td>
+                                <td><%= driver.getGender()%></td>
+                                <td><%= driver.getLicenseNumber()%></td>
+                                <td><%= driver.getVehicleType()%></td>
+                                <td><%= driver.getVehicleRegistrationNumber()%></td>
+                                <td><%= driver.getVehicleMakeModel()%></td>
                                 <td>
-                                    <div class="action-buttons">
-                                        <form action="DriverServlet" method="post" style="display:inline;">
-                                            <input type="hidden" name="action" value="edit">
-                                            <input type="hidden" name="id" value="<%= rs.getInt("id")%>">
-                                            <button type="button" class="edit-btn" onclick="openEditForm(<%= rs.getInt("id")%>)">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </button>
-                                        </form>
-                                        <form action="DriverServlet" method="post" style="display:inline;">
-                                            <input type="hidden" name="action" value="delete">
-                                            <input type="hidden" name="id" value="<%= rs.getInt("id")%>">
-                                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this driver?')">
-                                                <i class="fas fa-trash-alt"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
+                                    <button type="button" class="edit-btn" onclick="editDriver(<%= driver.getDriverId()%>, '<%= driver.getName()%>', '<%= driver.getPhoneNumber()%>', '<%= driver.getNic()%>', '<%= driver.getGender()%>', '<%= driver.getAddress()%>', '<%= driver.getLicenseNumber()%>', '<%= driver.getVehicleType()%>', '<%= driver.getVehicleRegistrationNumber()%>', '<%= driver.getVehicleMakeModel()%>')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <form action="<%=request.getContextPath()%>/AdminDriverServlet" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="driverID" value="<%= driver.getDriverId()%>">
+                                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this driver?')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             <%
                                     }
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    out.println("<tr><td colspan='10'>Error retrieving driver data: " + e.getMessage() + "</td></tr>");
                                 }
                             %>
                         </tbody>
@@ -151,60 +191,76 @@
             </div>
         </div>
 
-        <div class="edit-form-popup" id="editFormPopup">
-            <div class="edit-form-content">
-                <div class="edit-form-header">
-                    <h3>Edit Driver</h3>
-                    <span class="close-btn" onclick="closeEditForm()">&times;</span>
-                </div>
-                <form action="DriverServlet" method="post">
-                    <input type="hidden" name="action" value="edit">
-                    <input type="hidden" id="edit-id" name="id" value="">
-                    <div class="form-group">
-                        <label for="edit-name">Full Name</label>
-                        <input type="text" id="edit-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-phone">Phone Number</label>
-                        <input type="text" id="edit-phone" name="phone_number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-nic">NIC</label>
-                        <input type="text" id="edit-nic" name="nic" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-license">License Number</label>
-                        <input type="text" id="edit-license" name="license_number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-vehicle">Vehicle ID</label>
-                        <input type="text" id="edit-vehicle" name="vehicle_id" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-status">Status</label>
-                        <select id="edit-status" name="status" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-                    </div>
-                    <div class="form-actions" style="margin-top: 20px;">
-                        <button type="submit" class="admin-btn">
-                            <i class="fas fa-save"></i> Update Driver
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
 
         <script>
-            function openEditForm(id) {
-                document.getElementById('edit-id').value = id;
-                document.getElementById('editFormPopup').style.display = 'flex';
+            function editDriver(driverID, name, phoneNumber, nic, gender, address, licenseNumber, vehicleType, vehicleRegistration, vehicleModel) {
+                // Change form title
+                document.querySelector('.driver-form h3').textContent = "Edit Driver";
+
+                // Set form action to update
+                document.querySelector('input[name="action"]').value = "update";
+
+                // Add a hidden field for the driver ID
+                if (!document.getElementById('driverIDField')) {
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.id = 'driverIDField';
+                    hiddenField.name = 'driverID';
+                    document.querySelector('.driver-form form').appendChild(hiddenField);
+                }
+                document.getElementById('driverIDField').value = driverID;
+
+                // Fill form fields with current data
+                document.getElementById('name').value = name;
+                document.getElementById('phone_number').value = phoneNumber;
+                document.getElementById('nic').value = nic;
+                document.getElementById('gender').value = gender;
+                document.getElementById('address').value = address;
+                document.getElementById('license_number').value = licenseNumber;
+                document.getElementById('vehicle_type').value = vehicleType;
+                document.getElementById('vehicle_registration_number').value = vehicleRegistration;
+                document.getElementById('vehicle_make_model').value = vehicleModel;
+
+                // Disable username and password fields for edit mode
+                document.getElementById('username').disabled = true;
+                document.getElementById('password').disabled = true;
+                document.getElementById('username').value = "driver" + driverID; // Just for display
+                document.getElementById('password').value = "********"; // Placeholder
+
+                // Change button text
+                const submitButton = document.querySelector('.driver-form button[type="submit"]');
+                submitButton.innerHTML = '<i class="fas fa-save"></i> Update Driver';
+
+                // Scroll to form
+                document.querySelector('.driver-form').scrollIntoView({behavior: 'smooth'});
             }
 
-            function closeEditForm() {
-                document.getElementById('editFormPopup').style.display = 'none';
+            // Function to reset form to add mode
+            function resetToAddMode() {
+                document.querySelector('.driver-form h3').textContent = "Add New Driver";
+                document.querySelector('input[name="action"]').value = "add";
+                document.querySelector('.driver-form form').reset();
+
+                // Enable username and password fields
+                document.getElementById('username').disabled = false;
+                document.getElementById('password').disabled = false;
+
+                // Change button text back
+                const submitButton = document.querySelector('.driver-form button[type="submit"]');
+                submitButton.innerHTML = '<i class="fas fa-plus"></i> Add Driver';
             }
+
+            // Add a reset button to the form
+            document.addEventListener('DOMContentLoaded', function () {
+                const formActions = document.querySelector('.form-actions');
+                const resetButton = document.createElement('button');
+                resetButton.type = 'button';
+                resetButton.className = 'admin-btn';
+                resetButton.innerHTML = '<i class="fas fa-undo"></i> Cancel';
+                resetButton.onclick = resetToAddMode;
+                formActions.appendChild(resetButton);
+            });
         </script>
     </body>
 </html>

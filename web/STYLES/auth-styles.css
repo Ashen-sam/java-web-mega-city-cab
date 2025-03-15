@@ -82,7 +82,7 @@ input{
     gap:10px;
 }
 .auth__submit{
-    background-color: #3D3D3D;
+    background-color: black;
     color:white;
     border:none;
     font-weight: 500;

@@ -1,10 +1,11 @@
 package MODEL;
 
 public class Booking_Megacity {
-
     private int bookingId;
     private int customerRegId;
     private int vehicleId;
+    private int driverId;
+    private String customerName;
     private String pickupLocation;
     private String dropLocation;
     private String bookingDate;
@@ -12,22 +13,8 @@ public class Booking_Megacity {
     private double price;
     private String status;
 
-    // Default Constructor
+    // Constructors
     public Booking_Megacity() {
-    }
-
-    // Parameterized Constructor
-    public Booking_Megacity(int bookingId, int customerRegId, int vehicleId, String pickupLocation,
-            String dropLocation, String bookingDate, String bookingTime, double price, String status) {
-        this.bookingId = bookingId;
-        this.customerRegId = customerRegId;
-        this.vehicleId = vehicleId;
-        this.pickupLocation = pickupLocation;
-        this.dropLocation = dropLocation;
-        this.bookingDate = bookingDate;
-        this.bookingTime = bookingTime;
-        this.price = price;
-        this.status = status;
     }
 
     // Getters and Setters
@@ -53,6 +40,22 @@ public class Booking_Megacity {
 
     public void setVehicleId(int vehicleId) {
         this.vehicleId = vehicleId;
+    }
+
+    public int getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(int driverId) {
+        this.driverId = driverId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getPickupLocation() {
@@ -101,21 +104,5 @@ public class Booking_Megacity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    // Override toString() method for better readability
-    @Override
-    public String toString() {
-        return "Booking_Megacity{"
-                + "bookingId=" + bookingId
-                + ", customerRegId=" + customerRegId
-                + ", vehicleId=" + vehicleId
-                + ", pickupLocation='" + pickupLocation + '\''
-                + ", dropLocation='" + dropLocation + '\''
-                + ", bookingDate='" + bookingDate + '\''
-                + ", bookingTime='" + bookingTime + '\''
-                + ", price=" + price
-                + ", status='" + status + '\''
-                + '}';
     }
 }

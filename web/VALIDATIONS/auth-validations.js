@@ -35,6 +35,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
  window.onload = function() {
-            // Assuming your form has an ID, you can reset it
             document.getElementById("authForm").reset();
         };

@@ -15,9 +15,43 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 body {
-    background-color: #f8f9fa;
     color: #333;
 }
+
+.alert-message {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #28a745; 
+    background-color: #d4edda; 
+    color: #155724; 
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.alert-error {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #dc3545; 
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+.alert_btn{
+    border:none; /* Green border */
+    background-color: white;
+    padding:4px;
+
+}
+
+
 
 .header {
     display: flex;
@@ -50,24 +84,12 @@ body {
     text-decoration: none;
     color: #333;
     font-weight: 500;
-    transition: all 0.3s ease;
     position: relative;
 }
 
-.nav-links a:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background-color: #333;
-    bottom: -5px;
-    left: 0;
-    transition: width 0.3s ease;
-}
 
-.nav-links a:hover:after {
-    width: 100%;
-}
+
+
 
 .auth__submit {
     background-color: black;

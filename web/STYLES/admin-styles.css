@@ -13,7 +13,38 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+.alert-message {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #28a745;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.alert-error {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
 
+
+.alert_btn{
+    border:none; /* Green border */
+    background-color: white;
+    padding:4px;
+
+}
 body {
     background-color: #f8f9fa;
     color: #333;

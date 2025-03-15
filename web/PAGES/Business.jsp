@@ -137,50 +137,6 @@
                 <a href="#">See terms and conditions</a>
             </div>
         </section>
-        <section class="business-cta">
-            <div class="cta-container">
-                <h2>Ready to transform your business transportation?</h2>
-                <p>Connect with our business solutions team to get started with a customized plan for your organization's needs.</p>
-
-                <div id="contact-form" class="contact-form">
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Contact Person</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Business Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="employees">Number of Employees</label>
-                            <select id="employees" name="employees" required>
-                                <option value="" disabled selected>Select an option</option>
-                                <option value="1-10">1-10</option>
-                                <option value="11-50">11-50</option>
-                                <option value="51-200">51-200</option>
-                                <option value="201-500">201-500</option>
-                                <option value="501+">501+</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">How can we help your business?</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <input type="submit" class="auth__submit" value="Submit Request">
-                    </form>
-                </div>
-            </div>
-        </section>
-
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-grid">

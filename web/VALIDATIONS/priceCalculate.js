@@ -93,17 +93,17 @@ const baseFare = {
 function calculateDistance(pickup, drop) {
     pickup = pickup.toLowerCase().trim();
     drop = drop.toLowerCase().trim();
-    
+
     // Direct lookup if available
     if (locationDistances[pickup] && locationDistances[pickup][drop] !== undefined) {
         return locationDistances[pickup][drop];
     }
-    
+
     // Reverse lookup if available
     if (locationDistances[drop] && locationDistances[drop][pickup] !== undefined) {
         return locationDistances[drop][pickup];
     }
-    
+
     // Default estimated distance if locations are not in our database
     return 5; // Default 5km if unknown
 }
@@ -112,28 +112,15 @@ function calculateDistance(pickup, drop) {
 function calculatePrice(pickup, drop, vehicleType) {
     const distance = calculateDistance(pickup, drop);
     const vehicle = vehicleType.toLowerCase();
-    
+
     if (!pricePerKm[vehicle]) {
         return "Invalid vehicle type";
     }
-    
+
     const fare = baseFare[vehicle] + (distance * pricePerKm[vehicle]);
     return Math.round(fare); // Round to nearest rupee
 }
 
-// Function to update price display
-//function updatePrice() {
-//    const pickup = document.getElementById('pickupLocation').value;
-//    const drop = document.getElementById('dropLocation').value;
-//    const vehicleType = document.getElementById('vehicleType').value;
-//    
-//    if (pickup && drop && vehicleType) {
-//        const price = calculatePrice(pickup, drop, vehicleType);
-//        document.getElementById('priceDisplay').textContent = `Rs. ${price}`;
-//    } else {
-//        document.getElementById('priceDisplay').textContent = 'Please select all fields';
-//    }
-//}
 function updatePrice() {
     const pickup = document.getElementById('pickupLocation').value;
     const drop = document.getElementById('dropLocation').value;
@@ -142,7 +129,7 @@ function updatePrice() {
     if (pickup && drop && vehicleType) {
         const price = calculatePrice(pickup, drop, vehicleType);
         document.getElementById('priceDisplay').textContent = `Rs. ${price}`;
-        
+
         // Set hidden price input
         document.getElementById('price').value = price;
     } else {
@@ -152,85 +139,25 @@ function updatePrice() {
 
 
 // Add event listeners when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Create a price display element if it doesn't exist
     if (!document.getElementById('priceDisplay')) {
         const priceLabel = document.querySelector('.book__container_main form h3:nth-child(2)');
         priceLabel.innerHTML = 'Price: <span id="priceDisplay">Select locations</span>';
     }
-    
+
     // Add event listeners to input fields
     document.getElementById('pickupLocation').addEventListener('input', updatePrice);
     document.getElementById('dropLocation').addEventListener('input', updatePrice);
     document.getElementById('vehicleType').addEventListener('change', updatePrice);
-    
+
     // Initialize price display
     updatePrice();
 });
 
-// Modified form submission function
-//function showAdditionalForm(event) {
-//    event.preventDefault();
-//    
-//    // Get form values
-//    const vehicleType = document.getElementById('vehicleType').value;
-//    const pickup = document.getElementById('pickupLocation').value;
-//    const drop = document.getElementById('dropLocation').value;
-//    const date = document.getElementById('bookingDate').value;
-////    const price = document.getElementById('priceDisplay').textContent;
-//     let priceInput = document.getElementById("price");
-//    
-//    // Store data to use in the next step
-//    sessionStorage.setItem('bookingData', JSON.stringify({
-//        vehicleType: vehicleType,
-//        pickup: pickup,
-//        drop: drop,
-//        date: date,
-//        price: price
-//    }));
-//    
-//     function confirmBooking() {
-//            var name = document.getElementById("name").value;
-//            var phone = document.getElementById("phone").value;
-//            var pickup = document.getElementById("pickup").value;
-//            var drop = document.getElementById("drop").value;
-//            var price = calculatePrice(pickup, drop);
-//
-//            var message = "Booking Details:\n" +
-//                          "Name: " + name + "\n" +
-//                          "Phone: " + phone + "\n" +
-//                          "Pickup: " + pickup + "\n" +
-//                          "Drop: " + drop + "\n" +
-//                          "Price: " + price;
-//
-//            alert(message);
-//
-//            // Pass data to another form using localStorage
-//            localStorage.setItem("name", name);
-//            localStorage.setItem("phone", phone);
-//            localStorage.setItem("pickup", pickup);
-//            localStorage.setItem("drop", drop);
-//            localStorage.setItem("price", price);
-//
-//            // Redirect to the additional form
-//            window.location.href = "additionalForm.jsp";
-//        }
-//
-//        function calculatePrice(pickup, drop) {
-//            return Math.random() * 1000; // Replace this with actual price calculation logic
-//        }
-//    // Redirect to the next form or show additional fields
-//    // For this example, we'll just alert with the data
-//    alert(`Booking details:\nVehicle: ${vehicleType}\nPickup: ${pickup}\nDrop: ${drop}\nDate: ${date}\nPrice: ${price}`);
-//    
-//    // Here you would normally show a confirmation form or redirect to the next step
-//    // Replace this with your actual form flow logic
-//}
-
-
 function showAdditionalForm(event) {
     event.preventDefault();
-    
+
     // Get form values
     const vehicleType = document.getElementById('vehicleType').value;
     const pickup = document.getElementById('pickupLocation').value;
@@ -239,7 +166,7 @@ function showAdditionalForm(event) {
 
     // Calculate the price
     const price = calculatePrice(pickup, drop, vehicleType);
-    
+
     // Store data to use in the next step
     sessionStorage.setItem('bookingData', JSON.stringify({
         vehicleType: vehicleType,
@@ -248,10 +175,12 @@ function showAdditionalForm(event) {
         date: date,
         price: price
     }));
-    
+
     // Optional: Confirm the booking with an alert message (for debugging)
     alert(`Booking details:\nVehicle: ${vehicleType}\nPickup: ${pickup}\nDrop: ${drop}\nDate: ${date}\nPrice: Rs. ${price}`);
-    
+
     // Proceed to the next form or step in the booking flow
     window.location.href = "additionalForm.jsp";
+    
+   
 }
