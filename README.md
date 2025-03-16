@@ -1,5 +1,7 @@
 # MegaCity Cab Service - Web Application
 
+![image](https://github.com/user-attachments/assets/d2a5f428-2419-44d9-8a3d-ffb38e356f6b)
+
 ## 🚖 About the Project
 MegaCity Cab Service is a web-based application that enables **customers**, **drivers**, and **admins** to interact efficiently.
 * **Customers** can book vehicles, sign up, and log in.
